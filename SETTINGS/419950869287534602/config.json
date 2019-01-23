@@ -17,13 +17,13 @@
             "Minecraft": "Minecraft",
             "Rocket League": "Rocket League",
             "The Elder Scrolls Online": "ESO",
-            "Tom Clancy's Rainbow Six Siege": "Rainbow Six Siege"
+            "Tom Clancy's Rainbow Six Siege": "Rainbow Six Siege",
             "Garry's Mod": "Trouble in Terrorist Town",
             "ARK: Survival Evolved": "ARK",
             "Battlefield 1": "Battlefield",
             "Overwatch": "Overwatch",
             "PlanetSide 2": "Planetside 2",
-            "Rainbow Six Siege": "Rainbow Six Siege",
+            "Rainbow Six Siege": "Rainbow Six Siege"
         },
         "permissions": [
             "Admin"
