@@ -1,0 +1,40 @@
+{
+  "autorole": {
+      "aaa": "Overhaul",
+      "enabled": true,
+      "links": {
+          "Battlefield 1": "Battlefield",
+          "Counter-Strike Global Offensive": "Counter Strike",
+          "Destiny 2": "Destiny",
+          "Factorio": "Factorio",
+          "For Honor": "For Honor",
+          "Garry's Mod": "Trouble in Terrorist Town",
+          "Grand Theft Auto V": "Grant Theft Auto V",
+          "Minecraft": "Minecraft",
+          "Overwatch": "Overwatch",
+          "PlanetSide 2": "Planetside 2",
+          "Rocket League": "Rocket League",
+          "Rainbow Six Siege": "Rainbow Six Siege",
+          "Tom Clancy's Rainbow Six Siege": "Rainbow Six Siege",
+          "The Elder Scrolls Online": "ESO",
+          "Fortnite": "Fortnite",
+          "ARK: Survival Evolved": "ARK"
+      },
+      "permissions": [
+          "Admin",
+          "Techniker"
+      ],
+      "roleblacklist": [
+          "Admin",
+          "Moderator",
+          "Techniker"
+      ]
+  },
+  "autoclear": {
+      "enabled": true,
+      "links": {
+          "235088799074484224": "364488109548896257",
+          "252128902418268161": "364488109548896257"
+      }
+  }
+}

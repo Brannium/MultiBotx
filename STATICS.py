@@ -1,0 +1,2 @@
+PREFIX = '--'
+FILEPATH = 'SETTINGS/'

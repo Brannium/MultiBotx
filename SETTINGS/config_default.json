@@ -1,0 +1,12 @@
+{
+    "autorole": {
+        "enabled": false,
+        "links": {},
+        "permissions": [],
+        "roleblacklist": []
+    },
+    "autoclear": {
+        "enabled": false,
+        "links": {}
+    }
+}
