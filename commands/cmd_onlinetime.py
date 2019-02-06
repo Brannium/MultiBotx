@@ -1,12 +1,20 @@
-from utility import statsManager
+import discord
 
-sm = statsManager
+from utility import sqlHandler
+
+db = sqlHandler.MyDatabase()
 
 
-async def ex(message, invoke, args, client):
+def ex(message, invoke, args, client):
 
-    json_decoded = sm.getStats(message.server)
-    print('User %s was online for %s seconds in total' % (args[0], json_decoded['onlinetime'][message.author.id]))
+    stats = db.get_stats(message.server.id)
+    onlinetime = stats['onlinetime'][args[0]]
+
+    if onlinetime:
+        yield from send_embeded_message(
+            'User %s was online for %s seconds in total' % (args[0], onlinetime), message.channel, discord.Color.blue(),client)
+    else:
+        yield from send_embeded_message('User %s was not online yet' % args[0], message.channel, discord.Color.blue(), client)
 
 
 def send_embeded_message(content, channel, color, client):

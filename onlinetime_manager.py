@@ -1,8 +1,8 @@
 import time
 
-from utility import statsManager
+from utility import sqlHandler
 
-sm = statsManager
+db = sqlHandler.MyDatabase()
 
 went_online_time = dict()
 
@@ -46,14 +46,15 @@ async def went_online(member_id):
 
 
 async def went_offline(member):
-    json_decoded = sm.getStats(member.server)
+    stats = db.get_stats(member.server.id)
     if str(member.id) in went_online_time:      # check if 'user went online time' is saved
         elapsed_time = (int(time.time())) - went_online_time[str(member.id)]
-        try:
-            json_decoded['onlinetime'][member.id] += elapsed_time
-        except KeyError:
-            json_decoded['onlinetime'][member.id] = elapsed_time
-        sm.saveStats(member.server, json_decoded)
+
+        if stats['onlinetime'][member.id]:
+            stats['onlinetime'][member.id] += elapsed_time
+        else:
+            stats['onlinetime'][member.id] = elapsed_time
+        db.save_stats(member.server.id, stats)
         print('[Onlinetime Manager] Member \'%s#%s (%s)\' went offline after being online for %s seconds' % (member.name, member.discriminator, member.display_name, elapsed_time))   # TODO give seconds in Minutes and hours
         del went_online_time[str(member.id)]
     else:

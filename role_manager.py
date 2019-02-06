@@ -1,13 +1,12 @@
 import discord
 
-from utility import ConfigManager
+from utility import sqlHandler
 
-cm = ConfigManager
-
+db = sqlHandler.MyDatabase()
 
 async def ex(member, client):
 
-    config = cm.getConfig(member.server)
+    config = db.get_config(member.server.id)
     if config['autorole']['enabled']:
         if not on_roleblacklist(member, config):
             for key, value in config['autorole']['links'].items():

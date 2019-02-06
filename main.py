@@ -5,13 +5,11 @@ from discord import Game, Embed
 
 import autoclear_manager
 import onlinetime_manager
-from utility import ConfigManager
 import STATICS
 import role_manager
-from commands import cmd_ping, cmd_autorole, cmd_sortConfig, cmd_channelid, cmd_userid, cmd_onlinetime
+from commands import cmd_ping, cmd_autorole, cmd_sortConfig, cmd_channelid, cmd_userid, cmd_onlinetime, cmd_config
 
 client = discord.Client()
-cm = ConfigManager
 
 onlinetime_mngr = onlinetime_manager
 
@@ -19,6 +17,7 @@ commands = {
 
     "autorole": cmd_autorole,
     "channelid": cmd_channelid,
+    "config": cmd_config,
     "onlinetime": cmd_onlinetime,
     "ping": cmd_ping,
     "sortConfig": cmd_sortConfig,
@@ -33,7 +32,7 @@ async def on_ready():
     for s in client.servers:
         print(" - %s (%s)" % (s.name, s.id))
 
-    await client.change_presence(game=Game(name="v0.4.4.0"))
+    await client.change_presence(game=Game(name="v0.5.0.0"))
 
     await onlinetime_mngr.check_online_members(client)
 
@@ -45,15 +44,12 @@ def on_message(message):
     if message.content.startswith(STATICS.PREFIX):
         invoke = message.content[len(STATICS.PREFIX):].split(" ")[0]
         args = message.content.split(" ")[1:]
-        print("Command from %s: INVOKE: %s; ARGS: %s" % (message.author, invoke, args.__str__()[1:-1].replace("'", "")))
+        print("[Command] from %s: %s" % (message.author, message.content))
 
         if commands.__contains__(invoke):
             yield from commands.get(invoke).ex(message, invoke, args, client)
         else:
             yield from client.send_message(message.channel, embed=Embed(color=discord.Color.red(), description=("There is no such command: %s" % invoke)))
-
-    # log sent message
-    print("User %s: %s" % (message.author, message.author.id))
 
 
 @client.event

@@ -1,12 +1,12 @@
 import discord
 
-from utility import ConfigManager
+from utility import sqlHandler
 
-cm = ConfigManager
+db = sqlHandler.MyDatabase()
 
 async def ex(client, before, after):
 
-    config = ConfigManager.getConfig(after.server)
+    config = db.get_config(after.server.id)
 
     if config['autoclear']['enabled']:
         for user_id, channel_id in config['autoclear']['links'].items():

@@ -1,19 +1,19 @@
 import discord
-from utility import ConfigManager
+from utility import sqlHandler
 
-cm = ConfigManager
+db = sqlHandler.MyDatabase()
 
 def ex(message, invoke, args, client):
     if has_permission(message.author):
-        config = cm.getConfig(message.server)
-        cm.saveConfig(message.server, config)
+        config = db.get_config(message.server.id)
+        db.save_config(message.server.id, config)
         yield from send_embeded_message('Config sorted!', message.channel, discord.Color.green(), client)
     else:
         yield from send_embeded_message('You don\'t have the permission to execute this command!', message.channel, discord.Color.red(), client)
 
 
 def has_permission(member):
-    config = cm.getConfig(member.server)
+    config = db.get_config(member.server.id)
     for element in config['autorole']['permissions']:
         role = discord.utils.get(member.server.roles, name=element)
         if role is not None:
