@@ -5,17 +5,13 @@ import psycopg2
 from nested_dict import nested_dict
 from psycopg2 import sql
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
 DEFAULT_TABLE = 'multibot'
 CONFIG = 'config'
 STATS = 'stats'
 
 class MyDatabase():
     def __init__(self):
-        self.user = os.environ.get('db_user')
-        self.password = os.environ.get('db_password')
-        self.host = os.environ.get('db_host')
-        self.port = os.environ.get('db_port')
-        self.database = os.environ.get('db_database')
         self.con = None;
         self.cursor = None;
 
@@ -24,11 +20,7 @@ class MyDatabase():
     '''
     def connect(self):
         try:
-            self.con = psycopg2.connect(user=self.user,
-                                        password=self.password,
-                                        host=self.host,
-                                        port=self.port,
-                                        database=self.database)
+            self.con = psycopg2.connect(DATABASE_URL, sslmode='require')
             self.con.set_session(autocommit=True)
             self.cursor = self.con.cursor()
         except (Exception, psycopg2.Error) as error:
