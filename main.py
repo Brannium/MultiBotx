@@ -32,7 +32,7 @@ async def on_ready():
     for s in client.servers:
         print(" - %s (%s)" % (s.name, s.id))
 
-    await client.change_presence(game=Game(name="v0.5.0.0"))
+    await client.change_presence(game=Game(name="v0.5.1.0"))
 
     await onlinetime_mngr.check_online_members(client)
 
