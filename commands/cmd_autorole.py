@@ -103,6 +103,12 @@ def ex(message, invoke, args, client):
         else:
             yield from show_help(message, client)
 
+    else:
+        # to many arguments, show help
+
+        yield from send_embeded_message('To many arguments!', message.channel, discord.Color.blue(), client)
+        yield from show_help(message, client)
+
 
 def show_help(message, client):
     yield from send_embeded_message('Usage:'

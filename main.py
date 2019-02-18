@@ -1,5 +1,7 @@
 import os
 import asyncio as asyncio
+import re
+
 import discord
 from discord import Game, Embed
 
@@ -42,8 +44,19 @@ def on_message(message):
 
     # Checking message for defined prefix and call command class
     if message.content.startswith(STATICS.PREFIX):
-        invoke = message.content[len(STATICS.PREFIX):].split(" ")[0]
-        args = message.content.split(" ")[1:]
+        # Split command into invoke and args
+        split = message.content.split(' ', 1)
+        invoke = split[0][len(STATICS.PREFIX):]
+        print(len(split))
+        if len(split) > 1:
+            print("a")
+            args = re.findall('"[\w\s]+"|\w+', split[1])
+            # remove " from individual strings in args
+            for i in range(len(args)):
+                args[i] = args[i].strip('"')
+        else:
+            args = []
+
         print("[Command] from %s: %s" % (message.author, message.content))
 
         if commands.__contains__(invoke):
