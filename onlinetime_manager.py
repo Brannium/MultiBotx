@@ -8,7 +8,6 @@ went_online_time = dict()
 
 
 async def ex(client, before, after):
-
     if (before.voice.is_afk and not after.voice.is_afk):
         # Member went from afk to active
         print('[Onlinetime Manager] %s is no longer afk')
@@ -34,20 +33,26 @@ async def ex(client, before, after):
 
 
 async def check_online_members(client):
-
     for s in client.servers:
         for m in s.members:
             if (m.voice.voice_channel is not None and not m.voice.is_afk):
                 await went_online(m.id)
-                print('[Onlinetime Manager] Member \'%s#%s (%s)\' is online' % (m.name, m.discriminator, m.display_name))
+                print(
+                    '[Onlinetime Manager] Member \'%s#%s (%s)\' is online' % (m.name, m.discriminator, m.display_name))
+
 
 async def went_online(member_id):
     went_online_time[str(member_id)] = int(time.time())
 
 
 async def went_offline(member):
+    await save_time(member)
+    del went_online_time[str(member.id)]
+
+
+async def save_time(member):
     stats = db.get_stats(member.server.id)
-    if str(member.id) in went_online_time:      # check if 'user went online time' is saved
+    if str(member.id) in went_online_time:  # check if 'user went online time' is saved
         elapsed_time = (int(time.time())) - went_online_time[str(member.id)]
 
         if stats['onlinetime'][member.id]:
@@ -55,7 +60,7 @@ async def went_offline(member):
         else:
             stats['onlinetime'][member.id] = elapsed_time
         db.save_stats(member.server.id, stats)
-        print('[Onlinetime Manager] Member \'%s#%s (%s)\' went offline after being online for %s seconds' % (member.name, member.discriminator, member.display_name, elapsed_time))   # TODO give seconds in Minutes and hours
-        del went_online_time[str(member.id)]
-    else:
-        print('[Onlinetime Manager] Error 101 on member \'%s#%s (%s)\'' % (member.name, member.discriminator, member.display_name))
+        print('[Onlinetime Manager] Saved %s seconds of onlinetime for Member \'%s#%s (%s)\'' % (
+            elapsed_time, member.name, member.discriminator,
+            member.display_name))  # TODO give seconds in Minutes and hours
+        await went_online(member.id)
