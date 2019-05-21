@@ -1,4 +1,4 @@
 git+https://github.com/Rapptz/discord.py
 psycopg2
 nested_dict
-dateutil
+python-dateutil
