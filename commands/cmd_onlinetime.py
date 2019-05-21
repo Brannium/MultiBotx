@@ -1,6 +1,6 @@
 import discord
 
-import onlinetime_manager
+from manager import onlinetime_manager
 from utility import sqlHandler
 
 db = sqlHandler.MyDatabase()

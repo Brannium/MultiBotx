@@ -8,5 +8,10 @@
     "autoclear": {
         "enabled": false,
         "links": {}
+    },
+    "levelrole": {
+        "enabled": true,
+        "roles": ["Stammgast", "Superstammgast"],
+        "onlinetimes": [12, 30]
     }
 }

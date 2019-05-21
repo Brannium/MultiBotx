@@ -1,15 +1,15 @@
 import os
 import asyncio as asyncio
 import re
+import threading
 
 import discord
 from discord import Game, Embed
 
-import autoclear_manager
-import onlinetime_manager
+from manager import autoclear_manager, onlinetime_manager, role_manager, level_role_manager
 import STATICS
-import role_manager
-from commands import cmd_ping, cmd_autorole, cmd_sortConfig, cmd_channelid, cmd_userid, cmd_onlinetime, cmd_config
+from commands import cmd_ping, cmd_autorole, cmd_sortConfig, cmd_channelid, cmd_userid, cmd_onlinetime, cmd_config, \
+    cmd_tc
 
 client = discord.Client()
 
@@ -23,6 +23,7 @@ commands = {
     "onlinetime": cmd_onlinetime,
     "ping": cmd_ping,
     "sortConfig": cmd_sortConfig,
+    "tc": cmd_tc,
     "userid": cmd_userid
 
 }
@@ -34,9 +35,14 @@ async def on_ready():
     for s in client.servers:
         print(" - %s (%s)" % (s.name, s.id))
 
-    await client.change_presence(game=Game(name="v0.5.1.3"))
+    await client.change_presence(game=Game(name="v0.6.0.0"))
 
     await onlinetime_mngr.check_online_members(client)
+
+    level_role_manager.start_timer(client)
+
+    print('Bot loaded up successfully')
+
 
 @client.event
 @asyncio.coroutine
