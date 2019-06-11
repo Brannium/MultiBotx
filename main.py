@@ -71,8 +71,9 @@ def on_message(message):
 @client.event
 async def on_member_join(member):
 
-    # give member role 'Nutzer'
-    await client.add_roles(member, discord.utils.get(member.server.roles, name='Nutzer'))
+    # give member role 'Nutzer' if he is not a bot
+    if not member.bot:
+        await client.add_roles(member, discord.utils.get(member.server.roles, name='Nutzer'))
 
 @client.event
 async def on_member_update(before, after):
