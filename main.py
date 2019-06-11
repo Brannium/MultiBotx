@@ -5,7 +5,7 @@ import re
 import discord
 from discord import Game, Embed
 
-from manager import autoclear_manager, onlinetime_manager, role_manager, level_role_manager, max_user_manager
+from manager import autoclear_manager, onlinetime_manager, role_manager, level_role_manager
 import STATICS
 from commands import cmd_ping, cmd_autorole, cmd_sortConfig, cmd_channelid, cmd_userid, cmd_onlinetime, cmd_config, \
     cmd_tc
