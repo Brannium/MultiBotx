@@ -13,5 +13,9 @@
         "enabled": true,
         "roles": ["Stammgast", "Superstammgast"],
         "onlinetimes": [12, 30]
+    },
+    "maxuserextend": {
+        "enabled": true,
+        "roles": []
     }
 }

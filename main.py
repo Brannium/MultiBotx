@@ -5,7 +5,7 @@ import re
 import discord
 from discord import Game, Embed
 
-from manager import autoclear_manager, onlinetime_manager, role_manager, level_role_manager
+from manager import autoclear_manager, onlinetime_manager, role_manager, level_role_manager, max_user_manager
 import STATICS
 from commands import cmd_ping, cmd_autorole, cmd_sortConfig, cmd_channelid, cmd_userid, cmd_onlinetime, cmd_config, \
     cmd_tc
@@ -34,7 +34,7 @@ async def on_ready():
     for s in client.servers:
         print(" - %s (%s)" % (s.name, s.id))
 
-    await client.change_presence(game=Game(name="v0.6.3.1"))
+    await client.change_presence(game=Game(name=STATICS.VERSION))
 
     await onlinetime_mngr.check_online_members(client)
 
@@ -69,6 +69,12 @@ def on_message(message):
 
 
 @client.event
+async def on_member_join(member):
+
+    # give member role 'Nutzer'
+    await client.add_roles(member, discord.utils.get(member.server.roles, name='Nutzer'))
+
+@client.event
 async def on_member_update(before, after):
 
     # check members game and call role_manager
@@ -81,6 +87,7 @@ async def on_voice_state_update(before, after):
 
     await autoclear_manager.ex(client, before, after)
     await onlinetime_mngr.ex(client, before, after)
+    #await max_user_manager.ex(client, before, after)
 
 
 # start bot with access-token defined as system variable

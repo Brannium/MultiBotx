@@ -1,2 +1,3 @@
+VERSION = 'v0.6.3.2'
 PREFIX = '--'
 FILEPATH = 'SETTINGS/'
